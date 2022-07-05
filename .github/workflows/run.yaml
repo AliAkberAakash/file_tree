@@ -42,12 +42,12 @@ jobs:
     - name: Run build
       run: go build . 
       
-    # Run vet & lint on the code
-    - name: Run vet & lint
-      run: |
-        go vet .
-        golint .
+    # # Run vet & lint on the code
+    # - name: Run vet & lint
+    #   run: |
+    #     go vet .
+    #     golint .
     
-    # Run testing on the code
-    - name: Run testing
-      run: cd test && go test -v
+    # # Run testing on the code
+    # - name: Run testing
+    #   run: cd test && go test -v
