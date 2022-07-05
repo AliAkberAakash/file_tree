@@ -10,9 +10,9 @@ filetree <Feature Name> <File extension>
 
 for example `filetree login dart` will generate the following structure
 
-login/
---| controller/
-----| login_controller.dart
+login/\n
+--| controller/\n
+----| login_controller.dart\n
 --| data/
 ----| model/
 ------| login_request.dart
