@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/AliAkberAakash/file_tree/pkg/file"
+	"github.com/manifoldco/promptui"
 )
 
 func ReadArgsAndValidate() {
@@ -19,7 +20,15 @@ func ReadArgsAndValidate() {
 
 	isFileExists,err:=checkDirectoryExists(fileName)
 	if(isFileExists){	
-		fmt.Println("file already exists")
+		prompt := promptui.Select{
+			Label: "Do you want to replace the contents in "+fileName+" directory",
+			Items: []string{"Yes", "No"},
+    	}
+		_, result, err := prompt.Run()
+    	if err != nil {
+        	fmt.Printf("Prompt failed %v\n", err)	
+    	}
+		fmt.Println((result))
 	}else{
 		err = file.Generate(fileName)
 	}
