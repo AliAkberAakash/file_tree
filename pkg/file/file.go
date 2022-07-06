@@ -15,6 +15,7 @@ func Generate(name string,fileExtension string) error {
 	widget := screen + "/widget"
 
 	var folders []string
+	var fileName string
 
 	folders = append(folders, name)
 	folders = append(folders, data)
@@ -29,6 +30,29 @@ func Generate(name string,fileExtension string) error {
 		if err != nil {
 			return err
 		}	
+		
+		//create file for folders other than current dir,main folder and widget folder
+		if(folder != name && folder != data && folder != widget ){
+			if(folder == model){
+				fullRequestFilePath:=folder+"/"+name+"_request"+"."+fileExtension
+				fullResponseFilePath2:=folder+"/"+name+"_response"+"."+fileExtension
+				requestErr:= createEmptyFile(fullRequestFilePath)
+				responseErr:= createEmptyFile(fullResponseFilePath2)
+				if requestErr != nil {
+					return err
+				}
+				if responseErr != nil {
+					return err
+				}	
+			}else{
+				fileName=getFileName(folder)
+				fullFilePath:=folder+"/"+name+"_"+fileName+"."+fileExtension
+				err:= createEmptyFile(fullFilePath)
+				if err != nil {
+					return err
+				}
+			}
+		}
 	}
 
 	return nil
