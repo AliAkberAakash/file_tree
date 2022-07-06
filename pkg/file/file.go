@@ -2,6 +2,7 @@ package file
 
 import (
 	"os"
+	"strings"
 )
 
 func Generate(name string,fileExtension string) error {
@@ -40,4 +41,9 @@ func createEmptyFile(name string) error {
 
 func createFolder(name string) error {
 	return os.Mkdir(name, os.ModePerm)
+}
+
+func getFileName(path string) string{
+	var pathArray = strings.Split(path,"/")
+	return pathArray[len(pathArray)-1]
 }
