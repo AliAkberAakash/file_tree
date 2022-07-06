@@ -4,7 +4,7 @@ import (
 	"os"
 )
 
-func Generate(name string) error {
+func Generate(name string,fileExtension string) error {
 
 	data := name + "/data"
 	repo := data + "/repo"
@@ -27,7 +27,7 @@ func Generate(name string) error {
 		err := createFolder(folder)
 		if err != nil {
 			return err
-		}
+		}	
 	}
 
 	return nil
