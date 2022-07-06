@@ -1,6 +1,6 @@
 # File Tree 
 
-### File Treee is a cli that will generatee files and folders for you automatically.
+### File Tree is a cli that will generate files and folders for you automatically.
 
 To run it simply type:
 
