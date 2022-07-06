@@ -11,7 +11,7 @@ func Generate(name string,fileExtension string) error {
 	repo := data + "/repo"
 	model := data + "/model"
 	controller := name + "/controller"
-	screen := name + "/screeen"
+	screen := name + "/screen"
 	widget := screen + "/widget"
 
 	var folders []string
