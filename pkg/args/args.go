@@ -2,6 +2,7 @@ package args
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/AliAkberAakash/file_tree/pkg/file"
@@ -18,19 +19,29 @@ func ReadArgsAndValidate() {
 		return
 	}
 
+	//check if the directory already exists
 	isFileExists,err:=checkDirectoryExists(fileName)
 	if(isFileExists){	
+		//configure prompt
 		prompt := promptui.Select{
 			Label: "Do you want to replace the contents in "+fileName+" directory",
 			Items: []string{"Yes", "No"},
     	}
+
+		//display prompt
 		_, result, err := prompt.Run()
     	if err != nil {
-        	fmt.Printf("Prompt failed %v\n", err)	
+        	log.Fatalf("Prompt failed %v\n", err)		
     	}
-		fmt.Println((result))
+
+		//if the user selects yes
+		if(result=="Yes"){
+			os.RemoveAll(fileName)
+			generateFile(fileName)
+		}
+		
 	}else{
-		err = file.Generate(fileName)
+		generateFile(fileName)
 	}
 
 	if err != nil {
@@ -53,11 +64,18 @@ func validateArgs(args []string) (string, error) {
 
 func checkDirectoryExists(path string)(bool,error){
 	_,err:=os.Stat(path)
-	if(err==nil){
+	if err==nil {
 		return true,nil
 	}
-	if(os.IsNotExist(err)){
+	if os.IsNotExist(err) {
 		return false,nil
 	}
 	return false,err
+}
+
+func generateFile(fileName string){
+	err:=file.Generate(fileName)
+	if err != nil{
+		fmt.Println(err.Error())
+	}
 }
