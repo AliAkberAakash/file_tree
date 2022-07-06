@@ -17,7 +17,12 @@ func ReadArgsAndValidate() {
 		return
 	}
 
-	err = file.Generate(fileName)
+	isFileExists,err:=checkDirectoryExists(fileName)
+	if(isFileExists){	
+		fmt.Println("file already exists")
+	}else{
+		err = file.Generate(fileName)
+	}
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -35,4 +40,15 @@ func validateArgs(args []string) (string, error) {
 	fileName = args[1]
 
 	return fileName, nil
+}
+
+func checkDirectoryExists(path string)(bool,error){
+	_,err:=os.Stat(path)
+	if(err==nil){
+		return true,nil
+	}
+	if(os.IsNotExist(err)){
+		return false,nil
+	}
+	return false,err
 }
