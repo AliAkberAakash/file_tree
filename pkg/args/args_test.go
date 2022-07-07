@@ -6,9 +6,10 @@ func TestValidateArgsPositive(t *testing.T) {
 	args := []string{
 		"arg1",
 		"arg2",
+		"arg3",
 	}
 
-	filename, err := validateArgs(args)
+	filename, _, err := validateArgs(args)
 
 	if err != nil {
 		t.Errorf("Expected %v found %s", nil, err.Error())
@@ -24,7 +25,7 @@ func TestValidateArgsNegative(t *testing.T) {
 		"arg1",
 	}
 
-	_, err := validateArgs(args)
+	_, _, err := validateArgs(args)
 
 	if err == nil {
 		t.Errorf("Expected error found %s", err)
