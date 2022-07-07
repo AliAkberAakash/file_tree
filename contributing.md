@@ -1,5 +1,7 @@
 How to contribute to file_tree
 
+If you intend to make a contrubution, first and foremost, read the CHANGELOG.md file. This file aims to inform contributors of the latest updates on the project.
+
 Did you find a bug?
 
     Firstly, ensure the bug was not already reported by searching on GitHub under Issues.
