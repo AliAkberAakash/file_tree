@@ -2,9 +2,11 @@ package args
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/AliAkberAakash/file_tree/pkg/file"
+	"github.com/manifoldco/promptui"
 )
 
 func ReadArgsAndValidate() {
@@ -16,7 +18,7 @@ func ReadArgsAndValidate() {
 		fmt.Println(err.Error())
 		return
 	}
-
+  
 	err = file.Generate(fileName,fileExtension)
 
 	if err != nil {
@@ -37,4 +39,42 @@ func validateArgs(args []string) (string,string, error) {
 	fileExtension=args[2]
 
 	return fileName,fileExtension, nil
+}
+
+func checkDirectoryExists(path string)(bool,error){
+	_,err:=os.Stat(path)
+	if err==nil {
+		return true,nil
+	}
+	if os.IsNotExist(err) {
+		return false,nil
+	}
+	return false,err
+}
+
+func generateFile(fileName string){
+	err:=file.Generate(fileName)
+	if err != nil{
+		fmt.Println(err.Error())
+	}
+}
+
+func displayPrompt(fileName string) (bool,error){
+	var overWriteDirectory bool = false
+	//configure prompt
+	prompt := promptui.Select{
+		Label: "Do you want to replace the contents in "+fileName+" directory",
+		Items: []string{"Yes", "No"},
+	}
+
+	//display prompt
+	_, result, err := prompt.Run()
+	
+	//if the user selects Yes
+	if result == "Yes" {
+		overWriteDirectory = true
+	}
+
+	return overWriteDirectory,err
+
 }
