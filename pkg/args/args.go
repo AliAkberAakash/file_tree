@@ -2,7 +2,6 @@ package args
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/AliAkberAakash/file_tree/pkg/file"
