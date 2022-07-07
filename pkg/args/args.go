@@ -20,22 +20,15 @@ func ReadArgsAndValidate() {
 	}
 
 	//check if the directory already exists
-	isFileExists,err:=checkDirectoryExists(fileName)
+	isFileExists,err := checkDirectoryExists(fileName)
 	if(isFileExists){	
-		//configure prompt
-		prompt := promptui.Select{
-			Label: "Do you want to replace the contents in "+fileName+" directory",
-			Items: []string{"Yes", "No"},
-    	}
+		shouldOverwrite,err := displayPrompt(fileName)
 
-		//display prompt
-		_, result, err := prompt.Run()
-    	if err != nil {
-        	log.Fatalf("Prompt failed %v\n", err)		
-    	}
+		if err != nil {
+			log.Fatalf("Prompt failed %v\n", err)		
+		}
 
-		//if the user selects yes
-		if(result=="Yes"){
+		if(shouldOverwrite){
 			os.RemoveAll(fileName)
 			generateFile(fileName)
 		}
@@ -78,4 +71,24 @@ func generateFile(fileName string){
 	if err != nil{
 		fmt.Println(err.Error())
 	}
+}
+
+func displayPrompt(fileName string) (bool,error){
+	var overWriteDirectory bool = false
+	//configure prompt
+	prompt := promptui.Select{
+		Label: "Do you want to replace the contents in "+fileName+" directory",
+		Items: []string{"Yes", "No"},
+	}
+
+	//display prompt
+	_, result, err := prompt.Run()
+	
+	//if the user selects Yes
+	if result == "Yes" {
+		overWriteDirectory = true
+	}
+
+	return overWriteDirectory,err
+
 }
