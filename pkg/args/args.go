@@ -2,6 +2,7 @@ package args
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/AliAkberAakash/file_tree/pkg/file"
@@ -19,6 +20,23 @@ func ReadArgsAndValidate() {
 	}
 
 	err = file.Generate(fileName, fileExtension)
+
+	isFileExists, err := checkDirectoryExists(fileName)
+	if isFileExists {
+		shouldOverwrite, err := displayPrompt(fileName)
+
+		if err != nil {
+			log.Fatalf("Prompt failed %v\n", err)
+		}
+
+		if shouldOverwrite {
+			os.RemoveAll(fileName)
+			generateFile(fileName, fileExtension)
+		}
+
+	} else {
+		generateFile(fileName, fileExtension)
+	}
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -49,6 +67,13 @@ func checkDirectoryExists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+func generateFile(fileName, fileExtension string) {
+	err := file.Generate(fileName, fileExtension)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }
 
 func displayPrompt(fileName string) (bool, error) {
