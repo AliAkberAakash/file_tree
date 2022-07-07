@@ -15,7 +15,6 @@ func Generate(name string,fileExtension string) error {
 	widget := screen + "/widget"
 
 	var folders []string
-	var fileName string
 
 	folders = append(folders, name)
 	folders = append(folders, data)
@@ -32,25 +31,12 @@ func Generate(name string,fileExtension string) error {
 		}	
 		
 		//create file for folders other than current dir,main folder and widget folder
-		if(folder != name && folder != data && folder != widget ){
-			if(folder == model){
-				fullRequestFilePath:=folder+"/"+name+"_request"+"."+fileExtension
-				fullResponseFilePath2:=folder+"/"+name+"_response"+"."+fileExtension
-				requestErr:= createEmptyFile(fullRequestFilePath)
-				responseErr:= createEmptyFile(fullResponseFilePath2)
-				if requestErr != nil {
-					return err
-				}
-				if responseErr != nil {
-					return err
-				}	
-			}else{
-				fileName=getFileName(folder)
-				fullFilePath:=folder+"/"+name+"_"+fileName+"."+fileExtension
-				err:= createEmptyFile(fullFilePath)
-				if err != nil {
-					return err
-				}
+		shouldCreateFile := folder != name && folder != data && folder != widget
+		if(shouldCreateFile){
+			isModelFolder := folder == model
+			err := generateFile(isModelFolder,name,folder,fileExtension)
+			if err != nil {
+				return err
 			}
 		}
 	}
@@ -70,4 +56,32 @@ func createFolder(name string) error {
 func getFileName(path string) string{
 	var pathArray = strings.Split(path,"/")
 	return pathArray[len(pathArray)-1]
+}
+
+func generateFile(isModelFolder bool,featureName string,folder string,fileExtension string) error{
+
+	if(isModelFolder){
+		fullRequestFilePath := folder+"/"+featureName+"_request"+"."+fileExtension
+		fullResponseFilePath := folder+"/"+featureName+"_response"+"."+fileExtension
+
+		requestErr := createEmptyFile(fullRequestFilePath)
+		responseErr := createEmptyFile(fullResponseFilePath)
+
+		if requestErr != nil {
+			return requestErr
+		}
+		if responseErr != nil {
+			return responseErr
+		}	
+	}else{
+		fileName := getFileName(folder)
+		fullFilePath := folder+"/"+featureName+"_"+fileName+"."+fileExtension
+
+		err := createEmptyFile(fullFilePath)
+
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
