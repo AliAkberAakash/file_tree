@@ -5,7 +5,7 @@
 To run it simply type:
 
 ```
-filetree <Feature Name> <File extension>
+file_tree <Feature Name> <File extension>
 ```
 
 for example `filetree login dart` will generate the following structure
