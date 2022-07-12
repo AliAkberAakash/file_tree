@@ -8,7 +8,7 @@ To run it simply type:
 file_tree <Feature Name> <File extension>
 ```
 
-for example `filetree login dart` will generate the following structure
+for example `file_tree login dart` will generate the following structure
 
 ![File Structure](https://raw.githubusercontent.com/AliAkberAakash/file_tree/main/Screenshot%202022-07-05%20at%2010.31.58%20PM.png)
 
