@@ -1,7 +1,7 @@
  All Submissions:
 
 * [ ] Have you followed the guidelines in our Contributing document?
-* [ ] Have you checked to ensure there aren't other open [Pull Requests](../../../pulls) for the same update/change?
+* [ ] Have you checked to ensure there aren't other open [Pull Requests](../../pulls) for the same update/change?
 
 <!-- You can erase any parts of this template not applicable to your Pull Request. -->
 
@@ -40,5 +40,5 @@ Please go through these steps before you submit a PR.
 
     d. Put `closes #XXXX` in your comment to auto-close the issue that your PR fixes (if such).
 
-IMPORTANT: Please review the [CONTRIBUTING.md](../CONTRIBUTING.md) file for detailed contributing guidelines.
+IMPORTANT: Please review the [CONTRIBUTING.md](./CONTRIBUTING.md) file for detailed contributing guidelines.
 
