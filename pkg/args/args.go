@@ -19,7 +19,6 @@ func ReadArgsAndValidate() {
 		return
 	}
 
-	err = file.Generate(fileName, fileExtension)
 
 	isFileExists, err := checkDirectoryExists(fileName)
 	if isFileExists {
