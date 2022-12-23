@@ -49,7 +49,8 @@ func TestConvertModel(t *testing.T) {
 
 	var modelReader = GetModelReader()
 
-	output, err := modelReader.ConvertModel(jsonString)
+	var output FileStruct
+	err := modelReader.ConvertModel(jsonString, &output)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -60,21 +61,13 @@ func TestConvertModel(t *testing.T) {
 
 }
 
-func TestModelReaderComplete(t *testing.T) {
+func TestGetFileStructureFromFile(t *testing.T) {
 	fileName := "/Users/bs274/go_projects/file_tree/config.json"
 
 	var modelReader = GetModelReader()
 
-	jsonString, err := modelReader.ReadJsonConfig(fileName)
-
-	if err != nil {
-		log.Println(err.Error())
-		t.Error("Failed to read config file")
-	} else {
-		log.Println(string(jsonString))
-	}
-
-	output, err := modelReader.ConvertModel(jsonString)
+	var output FileStruct
+	err := modelReader.GetFileStructureFromFile(fileName, &output)
 
 	if err != nil {
 		log.Println(err.Error())

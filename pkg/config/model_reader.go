@@ -7,8 +7,9 @@ import (
 )
 
 type ModelReader interface {
-	ConvertModel(jsonString []byte) (FileStruct, error)
+	ConvertModel(jsonString []byte, fileStruct *FileStruct) error
 	ReadJsonConfig(filePath string) ([]byte, error)
+	GetFileStructureFromFile(filePath string, fileStruct *FileStruct) error
 }
 
 type modelReader struct{}
@@ -17,11 +18,9 @@ func GetModelReader() ModelReader {
 	return &modelReader{}
 }
 
-func (mr *modelReader) ConvertModel(jsonString []byte) (FileStruct, error) {
-	var fileStruct FileStruct
-	err := json.Unmarshal(jsonString, &fileStruct)
-
-	return fileStruct, err
+func (mr *modelReader) ConvertModel(jsonString []byte, fileStruct *FileStruct) error {
+	err := json.Unmarshal(jsonString, fileStruct)
+	return err
 }
 
 func (mr *modelReader) ReadJsonConfig(filePath string) ([]byte, error) {
@@ -35,4 +34,21 @@ func (mr *modelReader) ReadJsonConfig(filePath string) ([]byte, error) {
 	byteValue, err := ioutil.ReadAll(jsonFile)
 
 	return byteValue, err
+}
+
+func (mr *modelReader) GetFileStructureFromFile(filePath string, fileStruct *FileStruct) error {
+
+	jsonString, err := mr.ReadJsonConfig(filePath)
+
+	if err != nil {
+		return err
+	}
+
+	err = mr.ConvertModel(jsonString, fileStruct)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
