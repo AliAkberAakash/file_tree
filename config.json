@@ -1,0 +1,40 @@
+{
+    "name": "data",  
+    "type": "FD",
+    "children": [
+        {
+            "name": "model",  
+            "type": "FD",
+            "children": [
+                {
+                    "name": "request",  
+                    "type": "FL"
+                },
+                {
+                    "name": "response",  
+                    "type": "FL"
+                }
+            ]
+        },
+        {
+            "name": "repository",  
+            "type": "FD",
+            "children": [
+                {
+                    "name": "repository",  
+                    "type": "FL"
+                }
+            ]
+        },
+        {
+            "name": "data_source",  
+            "type": "FD",
+            "children": [
+                {
+                    "name": "data_source",  
+                    "type": "FL"
+                }
+            ]
+        }
+    ]
+}
