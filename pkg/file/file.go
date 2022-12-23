@@ -2,43 +2,65 @@ package file
 
 import (
 	"os"
-	"strings"
+
+	"github.com/AliAkberAakash/file_tree/pkg/config"
 )
 
-func Generate(name string,fileExtension string) error {
+func Generate(featureName string, fileExtension string) error {
+	mr := config.GetModelReader()
 
-	data := name + "/data"
-	repo := data + "/repo"
-	model := data + "/model"
-	controller := name + "/controller"
-	screen := name + "/screen"
-	widget := screen + "/widget"
+	var fs config.FileStruct
+	err := mr.GetFileStructureFromFile("config.json", &fs)
 
-	var folders []string
+	if err != nil {
+		return err
+	}
 
-	folders = append(folders, name)
-	folders = append(folders, data)
-	folders = append(folders, repo)
-	folders = append(folders, model)
-	folders = append(folders, controller)
-	folders = append(folders, screen)
-	folders = append(folders, widget)
+	// generate root folder first
+	err = createFolder(featureName)
+	if err != nil {
+		return err
+	}
 
-	for _, folder := range folders {
-		err := createFolder(folder)
-		if err != nil {
-			return err
-		}	
-		
-		//create file for folders other than current dir,main folder and widget folder
-		shouldCreateFile := folder != name && folder != data && folder != widget
-		if(shouldCreateFile){
-			isModelFolder := folder == model
-			err := generateFile(isModelFolder,name,folder,fileExtension)
+	if len(fs.Children) > 0 {
+		for _, fsc := range fs.Children {
+			err := generateFileAndFolders(featureName, featureName, fileExtension, fsc)
 			if err != nil {
 				return err
 			}
 		}
+	}
+
+	return nil
+}
+
+func generateFileAndFolders(root string, featureName string, fileExtension string, fs config.FileStruct) error {
+	if fs.Type == "FL" {
+		fileName := root + "/" + featureName + "_" + fs.Name + "." + fileExtension
+		err := createEmptyFile(fileName)
+
+		if err != nil {
+			return err
+		}
+	} else if fs.Type == "FD" {
+		if len(root) > 0 {
+			root = root + "/"
+		}
+		folderName := root + fs.Name
+		err := createFolder(folderName)
+		if err != nil {
+			return err
+		}
+
+		if len(fs.Children) > 0 {
+			for _, fsc := range fs.Children {
+				err := generateFileAndFolders(folderName, featureName, fileExtension, fsc)
+				if err != nil {
+					return err
+				}
+			}
+		}
+
 	}
 
 	return nil
@@ -51,37 +73,4 @@ func createEmptyFile(name string) error {
 
 func createFolder(name string) error {
 	return os.Mkdir(name, os.ModePerm)
-}
-
-func getFileName(path string) string{
-	var pathArray = strings.Split(path,"/")
-	return pathArray[len(pathArray)-1]
-}
-
-func generateFile(isModelFolder bool,featureName string,folder string,fileExtension string) error{
-
-	if(isModelFolder){
-		fullRequestFilePath := folder+"/"+featureName+"_request"+"."+fileExtension
-		fullResponseFilePath := folder+"/"+featureName+"_response"+"."+fileExtension
-
-		requestErr := createEmptyFile(fullRequestFilePath)
-		responseErr := createEmptyFile(fullResponseFilePath)
-
-		if requestErr != nil {
-			return requestErr
-		}
-		if responseErr != nil {
-			return responseErr
-		}	
-	}else{
-		fileName := getFileName(folder)
-		fullFilePath := folder+"/"+featureName+"_"+fileName+"."+fileExtension
-
-		err := createEmptyFile(fullFilePath)
-
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }
