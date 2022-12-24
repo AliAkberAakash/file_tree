@@ -8,9 +8,9 @@ To run it simply type:
 file_tree <Feature Name> <File extension>
 ```
 
-for example `file_tree login dart` will generate the following structure
+It will look for a `config.json` file in your project root and generate the files according to it. 
 
-![File Structure](https://raw.githubusercontent.com/AliAkberAakash/file_tree/main/Screenshot%202022-07-05%20at%2010.31.58%20PM.png)
+For creating your own `config.json` file please chek the example [here](https://github.com/AliAkberAakash/file_tree/blob/main/config.json)
 
 ### The project is still a work in progress. If you want to contribute please email me at ali852609@gmail.com
 
