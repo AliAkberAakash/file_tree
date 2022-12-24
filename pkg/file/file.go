@@ -1,6 +1,7 @@
 package file
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/AliAkberAakash/file_tree/pkg/config"
@@ -10,7 +11,18 @@ func Generate(featureName string, fileExtension string) error {
 	mr := config.GetModelReader()
 
 	var fs config.FileStruct
-	err := mr.GetFileStructureFromFile("config.json", &fs)
+	// mydir, err := os.Getwd()
+	// mydir = mydir + "/config.json"
+
+	// if _, err := os.Stat(mydir); errors.Is(err, os.ErrNotExist) {
+	// 	mydir = "config.json"
+	// }
+
+	mydir := "config.json"
+
+	fmt.Println("the path is " + mydir)
+
+	err := mr.GetFileStructureFromFile(mydir, &fs)
 
 	if err != nil {
 		return err
