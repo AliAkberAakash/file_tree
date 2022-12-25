@@ -6,7 +6,7 @@ Each entry must folow the following structure:
 ```
 {
   "name":"feature",
-  "type":FD,
+  "type":"FD",
   "children":[]
 }
 ```
@@ -25,15 +25,15 @@ Example config file:
 ```
 {
   "name":"feature",
-  "type":FD,
+  "type":"FD",
   "children":[
       {
           "name":"repository",
-          "type":FD,
+          "type":"FD",
           "children":[
               {
                   "name":"repository",
-                  "type":FL
+                  "type":"FL"
               }
           ]
       }
