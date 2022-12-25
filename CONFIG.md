@@ -27,12 +27,16 @@ Example config file:
   "name":"feature",
   "type":FD,
   "children":[
-      "name":"repository",
-      "type":FD,
-      "children":[
+      {
           "name":"repository",
-          "type":FL
-      ]
+          "type":FD,
+          "children":[
+              {
+                  "name":"repository",
+                  "type":FL
+              }
+          ]
+      }
   ]
 }
 ```
