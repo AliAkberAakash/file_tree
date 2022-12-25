@@ -1,4 +1,4 @@
-# Naming convention
+## File Naming convention
 To define your own structure, create a `config.json` file in the root of your project directory. The name of the file must be <b>config.json</b> and it needs to be a valid json file.
 
 ## Properties
