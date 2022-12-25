@@ -10,9 +10,9 @@ file_tree <Feature Name> <File extension>
 
 It will look for a `config.json` file in your project root and generate the files according to it. 
 
-For creating your own `config.json` file please chek the example [here](https://github.com/AliAkberAakash/file_tree/blob/main/config.json)
+For creating your own `config.json` file please chek the instructions [here](https://github.com/AliAkberAakash/file_tree/blob/main/CONFIG.md)
 
-### The project is still a work in progress. If you want to contribute please email me at ali852609@gmail.com
+### To contribute or report a problem create a new issue.
 
 
 
