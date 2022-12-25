@@ -1,7 +1,6 @@
 package file
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/AliAkberAakash/file_tree/pkg/config"
@@ -19,8 +18,6 @@ func Generate(featureName string, fileExtension string) error {
 	// }
 
 	mydir := "config.json"
-
-	fmt.Println("the path is " + mydir)
 
 	err := mr.GetFileStructureFromFile(mydir, &fs)
 
